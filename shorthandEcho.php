@@ -1,32 +1,26 @@
 <?php
+require "includes/header.php";
+require "includes/helpers.php";
+
+session_start();
+
 $store_name = "Sugon Snack";
-$product = "Adobe Express Nodes Tinkercad";
-$price = 45;
-$quantity = 3;
-$total = $price * $quantity;
-$thank_you = "Thank you for supporting local sweets";
+$product = $_SESSION['product'] ?? "No product";
+$quantity = $_SESSION['quantity'] ?? 0;
+$total = $_SESSION['final_total'] ?? 0;
+$thank_you = "Thank you for supporting local sweets!";
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="device-width, initial-scale=1.0">
-    <title>Shorthand Echo</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-
-<h1><?php echo $store_name; ?></h1>
+<h1><?= $store_name ?></h1>
 
 <h2>Order Summary</h2>
 
-<p><strong>Product:</strong> <?php echo $product; ?></p>
-<p><strong>Quantity:</strong> <?php echo $quantity; ?></p>
-<p><strong>Price per Pack:</strong> ₱<?php echo $price; ?></p>
-<p><strong>Total:</strong> ₱<?php echo $total; ?></p>
+<p><strong>Product:</strong> <?= $product ?></p>
+<p><strong>Quantity:</strong> <?= $quantity ?></p>
+<p><strong>Total:</strong> ₱<?= $total ?></p>
 
-<p><?php echo $thank_you; ?></p>
+<p><?= $thank_you ?></p>
+<br>
+<p><a href="typejuggling.php">View System Info →</a></p>
 
-</body>
-</html>
+<?php require "includes/footer.php"; ?>
