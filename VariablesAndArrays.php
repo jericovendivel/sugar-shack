@@ -1,20 +1,13 @@
 <?php
+require "includes/header.php";
+require "includes/helpers.php";
+
 $store_name = "Sugar Shack";
-$owner = "Vandtvel Jarico";
+$owner = "Vendivel Jerico   ";
 $items_available = 120;
 $best_sellers = ["Toy", "NY", "Chorp", "Crinkle Cookies"];
 $branches = ["Manila", "Cebu", "Taguig", "Davao"];
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Variables & Arrays</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
 
 <h1><?php echo $store_name; ?></h1>
 <p>Owner: <?php echo $owner; ?></p>
@@ -34,5 +27,7 @@ $branches = ["Manila", "Cebu", "Taguig", "Davao"];
 <?php endforeach; ?>
 </ul>
 
-</body>
-</html>
+<h2>Ready to Order?</h2>
+<p><a href="ExpressionsAndOperators.php">Start Order →</a></p>
+
+<?php require "includes/footer.php"; ?>
