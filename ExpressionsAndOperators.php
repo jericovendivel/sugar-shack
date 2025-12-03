@@ -1,34 +1,31 @@
 <?php
 require "includes/header.php";
 require "includes/helpers.php";
+require "includes/stocks.php";   // ← NEW (load products)
 
+session_start();
 
-// Product list (LOOP will display them)
-$products = [
-    ["name" => "Crinkle Cookies", "price" => 25],
-    ["name" => "NY Cookies", "price" => 35],
-    ["name" => "Milk Bars", "price" => 40]
-];
+// Convert stocks array into dropdown usable array
+$products = [];
+foreach ($sugon_products as $name => $info) {
+    $products[] = ["name" => $name, "price" => $info["price"]];
+}
 
-// If form is submitted
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
-    $product_index = $_POST['product'];
-    $quantity = $_POST['quantity'];
+    $index = $_POST['product'];
+    $quantity = (int) $_POST['quantity'];
 
-    $selected_product = $products[$product_index];
-    $cost = $selected_product["price"];
+    $product = $products[$index]["name"];
+    $price = $products[$index]["price"];
 
-    // Calculations
-    $subtotal = $quantity * $cost;
+    $subtotal = $quantity * $price;
     $tax = $subtotal * 0.12;
     $total = $subtotal + $tax;
     $discount = ($total > 100) ? $total * 0.05 : 0;
     $final_total = $total - $discount;
 
-    // Save for next page
-    session_start();
-    $_SESSION['product'] = $selected_product["name"];
+    $_SESSION['product'] = $product;
     $_SESSION['quantity'] = $quantity;
     $_SESSION['final_total'] = $final_total;
 
@@ -36,31 +33,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     echo "<p>Subtotal: ₱$subtotal</p>";
     echo "<p>Tax: ₱$tax</p>";
     echo "<p>Discount: ₱$discount</p>";
-    echo "<p><strong>Final Total: ₱$final_total</strong></p>";
-    echo "<br><br>";
-    echo '<p><a href="shorthandEcho.php">Proceed to Summary →</a></p>';
+    echo "<p><strong>Total: ₱$final_total</strong></p>";
+    echo "<p><a href='shorthandEcho.php'>Proceed →</a></p>";
 
 } else { ?>
 
 <h1>Create Your Order</h1>
 
 <form method="POST">
+    <p><label>Select Product:</label><br>
+    <select name="product">
+        <?php foreach ($products as $i => $p): ?>
+            <option value="<?=$i?>"><?=$p["name"]?> – ₱<?=$p["price"]?></option>
+        <?php endforeach; ?>
+    </select></p>
 
-<p><label>Select Product:</label>
-<select name="product">
-    <?php foreach ($products as $index => $p): ?>
-        <option value="<?php echo $index; ?>">
-            <?php echo $p["name"] . " - ₱" . $p["price"]; ?>
-        </option>
-    <?php endforeach; ?>
-</select></p>
+    <p><label>Quantity:</label>
+    <input type="number" name="quantity" min="1" required></p>
 
-
-<p><label>Quantity:</label>
-<input type="number" name="quantity" min="1" required></p>
-
-<p><button type="submit" class="button">Compute Total</button></p>
-
+    <p><button type="submit">Compute Total</button></p>
 </form>
 
 <?php }
