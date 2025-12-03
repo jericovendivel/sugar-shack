@@ -3,31 +3,34 @@ require "includes/header.php";
 require "includes/helpers.php";
 
 $store_name = "Sugar Shack";
-$owner = "Vendivel Jerico   ";
+$owner = "Vendivel Jerico";
 $items_available = 120;
-$best_sellers = ["Toy", "NY", "Chorp", "Crinkle Cookies"];
+
+$best_sellers = ["NY Cookies", "Milk Bars", "Crinkles", "Chorp Bars"];
 $branches = ["Manila", "Cebu", "Taguig", "Davao"];
 ?>
 
-<h1><?php echo $store_name; ?></h1>
-<p>Owner: <?php echo $owner; ?></p>
-<p>Items Available: <?php echo $items_available; ?></p>
+<h1><?=$store_name?></h1>
+<p><strong>Owner:</strong> <?=$owner?></p>
+<p><strong>Items Available:</strong> <?=$items_available?></p>
 
 <h2>Best Sellers</h2>
 <ul>
 <?php foreach ($best_sellers as $item): ?>
-    <li><?php echo $item; ?></li>
+    <li><?=$item?></li>
 <?php endforeach; ?>
 </ul>
 
 <h2>Branches</h2>
 <ul>
 <?php foreach ($branches as $branch): ?>
-    <li><?php echo $branch; ?></li>
+    <li><?=$branch?></li>
 <?php endforeach; ?>
 </ul>
 
 <h2>Ready to Order?</h2>
-<p><a href="ExpressionsAndOperators.php">Start Order →</a></p>
+<p><a href="ExpressionsAndOperators.php">Start Ordering →</a></p>
+
+<p><a href="StockMonitoring.php">Check Stock Levels →</a></p>
 
 <?php require "includes/footer.php"; ?>
